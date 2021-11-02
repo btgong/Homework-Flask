@@ -13,4 +13,5 @@ def getMember(name):
 def home():
 	title = 'Top Cities'
 	name = 'Brandon'
-	return render_template('home.html', title = title, name = name)
+	top_cities = ["Paris","London","Rome","Tahiti"]
+	return render_template('home.html', title = title, name = name, top_cities = top_cities)
