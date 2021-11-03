@@ -1,17 +1,22 @@
-from myapp import myapp_obj
-from flask import render_template
+from myapp import myapp_obj, db
+from flask import render_template, flash, redirect
+from myapp.forms import TopCities
+from myapp.models import Cities
 
-@myapp_obj.route("/login")
-def login():
-	return "Login Page!"
-
-@myapp_obj.route("/members/<string:name>/")
-def getMember(name):
-	return 'Hi ' + name
-
-@myapp_obj.route("/")
+@myapp_obj.route("/", methods=['GET', 'POST'])
 def home():
+	form = TopCities()
 	title = 'Top Cities'
 	name = 'Brandon'
-	top_cities = ["Paris","London","Rome","Tahiti"]
-	return render_template('home.html', title = title, name = name, top_cities = top_cities)
+
+	if form.validate_on_submit():
+		city = Cities(cityName = form.cityName.data, cityRank = form.cityRank.data, isVisited = form.isVisited.data)
+		db.session.add(city)
+		db.session.commit()
+		flash(f'Added {city.cityName} to database')
+		return redirect('/')
+
+	top_cities = Cities.query.order_by(Cities.cityRank).all()
+
+	return render_template('home.html', title = title, name = name, top_cities = top_cities, form = form)
+

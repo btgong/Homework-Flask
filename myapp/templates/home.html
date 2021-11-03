@@ -15,7 +15,36 @@
 		
 		<ul>
 		{% for city in top_cities %}
-			<li>{{city}}</li>
+			<li>{{city.cityName}}</li>
 		{% endfor %}		
-		</ul>		
+		</ul>
+
+		<form action="" method="POST">
+			{{form.hidden_tag()}}		
+			<p>
+				{{form.cityName.label}}
+				{{form.cityName(size=32)}}
+			</p>
+		</form>
+
+		<form action="" method="POST">
+			{{form.hidden_tag()}}
+			<p>
+				{{form.cityRank.label}}
+				{{form.cityRank(size=32)}}
+			</p>
+
+		<form action="" method="POST" novalidate>
+			{{form.hidden_tag()}}
+			<p>
+				{{form.isVisited.label}}
+				{{form.isVisited(size=32)}}
+			</p>
+
+		<form action="" method="POST">
+			{{form.hidden_tag()}}
+			<p>
+				{{form.submit.label}}
+				{{form.submit(size=32)}}
+			</p>		
 {% endblock %}
