@@ -5,6 +5,7 @@ from myapp.models import Cities
 
 @myapp_obj.route("/", methods=['GET', 'POST'])
 def home():
+
 	form = TopCities()
 	title = 'Top Cities'
 	name = 'Brandon'
@@ -13,10 +14,10 @@ def home():
 		city = Cities(cityName = form.cityName.data, cityRank = form.cityRank.data, isVisited = form.isVisited.data)
 		db.session.add(city)
 		db.session.commit()
-		flash(f'Added {city.cityName} to database')
+		flash(f'Added {city.cityName}')
 		return redirect('/')
 
 	top_cities = Cities.query.order_by(Cities.cityRank).all()
 
-	return render_template('home.html', title = title, name = name, top_cities = top_cities, form = form)
+	return render_template('home.html', title=title, name = name, top_cities = top_cities, form = form)
 
